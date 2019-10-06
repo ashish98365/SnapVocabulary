@@ -36,7 +36,7 @@ class ReviseScreen extends Component {
     }
 
     onMenuListPress = (listNo, level, noOfWords) => {
-        if (noOfWords === undefined || noOfWords == 0) {
+        if (noOfWords === undefined || noOfWords === 0) {
             return;
         }
         this.props.getSelectedReviseLevelDetail(listNo, level, 
