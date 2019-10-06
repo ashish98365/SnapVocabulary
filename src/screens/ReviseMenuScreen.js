@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, FlatList, Dimensions, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import { Spinner } from 'native-base';
-import { Card, ListItem, Icon } from 'react-native-elements';
+import { Card, ListItem } from 'react-native-elements';
 
 import { APP_THEME } from '../utils/Type';
 import { getReviseMenuDetail, getSelectedReviseLevelDetail } from '../actions';
@@ -121,4 +121,4 @@ const mapStateToProps = ({ reviseMenu: { reviseMenuArray } }) => {
 
 export default connect(mapStateToProps, 
                         { getReviseMenuDetail, getSelectedReviseLevelDetail }
-                    )(ReviseScreen);
+                       )(ReviseScreen);
