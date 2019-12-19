@@ -44,7 +44,6 @@ const mainNavigator = createBottomTabNavigator({
         backgroundColor: APP_THEME
       },
       headerTitleStyle: {
-        
         flex: 1,
         textAlign: 'center',
         color: '#ffffff'
