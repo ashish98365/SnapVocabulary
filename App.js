@@ -58,6 +58,7 @@ const mainNavigator = createBottomTabNavigator({
   },
   {
     defaultNavigationOptions: {
+      
       headerStyle: {
         backgroundColor: APP_THEME
       },
