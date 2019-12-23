@@ -1,8 +1,8 @@
 export const DATA_DOWNLOADED_SUCCESSFULLY = 'dataSuccessfullyDownloadedFromApi';
 export const NO_OF_WORD_LIST = 'totalNo';
 export const DATADOWNLOADED = 'wordsAlreadyDownloaded';
-export const ALL_WORD_INFO_URL = 'http://bookish.us-east-2.elasticbeanstalk.com/get-all-words';
-export const ALL_WORD_COUNT_URL = 'http://bookish.us-east-2.elasticbeanstalk.com/get-all-word-count';
+export const ALL_WORD_INFO_URL = 'http://18.221.100.118:8080/get-all-words';
+export const ALL_WORD_COUNT_URL = 'http://18.221.100.118:8080/get-all-word-count';
 export const WORD_LIST_SELECTED = 'word list is selected for learning';
 export const WORD_GROUP_SELECTED = 'word group selected';
 export const SEARCH_WORD = 'search word or wordGroup';

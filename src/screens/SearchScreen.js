@@ -73,7 +73,6 @@ class SearchScreen extends Component {
                 <Overlay 
                     isVisible={this.state.isVisible}
                     style={{ padding: 0 }}
-                    height={HEIGHT - 110}
                     width={WIDTH - 60}
                     onBackdropPress={() => this.setState({ isVisible: false, wordDetail: {} })}
                 >

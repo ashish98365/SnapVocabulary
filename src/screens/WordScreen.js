@@ -9,7 +9,6 @@ import Modal from 'react-native-modalbox';
 
 import WordDetail from '../components/WordDetail';
 
-const HEIGHT = Dimensions.get('window').height;
 const WIDTH = Dimensions.get('window').width;
 
 class WordScreen extends Component {
@@ -82,11 +81,10 @@ class WordScreen extends Component {
                 <Overlay 
                     isVisible={this.state.isVisible}
                     style={{ padding: 0, borderWidth: 5, borderColor: 'green' }}
-                    height={HEIGHT - 110}
                     width={WIDTH - 60}
                     onBackdropPress={() => this.setState({ isVisible: false, wordDetail: {} })}
                 >
-                   <WordDetail 
+                    <WordDetail 
                         wordDetail={this.state.wordDetail}
                     />  
                 </Overlay>

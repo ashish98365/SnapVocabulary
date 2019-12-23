@@ -7,7 +7,8 @@ import { updateWordDifficultLevel } from '../actions';
 import { 
     LEVEL_EASY,
     LEVEL_MEDIUM,
-    LEVEL_HARD
+    LEVEL_HARD,
+    APP_THEME
  } from '../utils/Type';
 
 class DifficultLevel extends Component {
@@ -23,7 +24,7 @@ class DifficultLevel extends Component {
         const { difficultLevelSelect } = styles;
         const { level } = this.props.wordDetail;
         return (
-            <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-around' }}>
+            <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-around', width: '100%' }}>
                 <View style={{ flexDirection: 'column' }}>
                     <Avatar 
                         rounded 
@@ -61,7 +62,7 @@ class DifficultLevel extends Component {
 
 const styles = {
     difficultLevelSelect: {
-        backgroundColor: 'blue'
+        backgroundColor: APP_THEME
     }
 };
 

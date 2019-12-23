@@ -1,25 +1,43 @@
 import React, { Component } from 'react';
-import { View, Text, TextInput, Dimensions } from 'react-native';
-import { Divider, Button, Card, ListItem } from 'react-native-elements';
+import { Dimensions, TextInput, ActivityIndicator } from 'react-native';
+import { Container, Content, Card, CardItem, Text, Button, Left, Body } from 'native-base';
 import { connect } from 'react-redux';
+import { Font } from 'expo'; //import is require else font error is given
 
 import TextToSpeech from '../components/TextToSpeech';
 import DifficultLevel from '../components/DifficultLevel';
 import { changeNoteText, updateNote } from '../actions';
 import { APP_THEME } from '../utils/Type';
+import ProgressCircle from './PercentCircle';
 
 const HEIGHT = Dimensions.get('window').height;
 const WIDTH = Dimensions.get('window').width;
 
 class WordDetail extends Component {
 
-    componentDidMount() {
-        if (this.props.wordDetail.wordNote) {
+    state={ loading: true }
+
+    async componentWillMount() {
+        await Expo.Font.loadAsync({
+            Roboto: require("../../node_modules/native-base/Fonts/Roboto.ttf"),
+            Roboto_medium: require("../../node_modules/native-base/Fonts/Roboto_medium.ttf"),
+            //Ionicons: require("../../node_modules/@expo/vector-icons/fonts/Ionicons.ttf"),
+          });
+          this.setState({ loading: false });
+          if (this.props.wordDetail.wordNote) {
             this.props.changeNoteText(this.props.wordDetail.wordNote);
         } else {
             this.props.changeNoteText('');
         }
     }
+
+    // componentDidMount() {
+    //     if (this.props.wordDetail.wordNote) {
+    //         this.props.changeNoteText(this.props.wordDetail.wordNote);
+    //     } else {
+    //         this.props.changeNoteText('');
+    //     }
+    // }
 
     onChangeText = (text) => {
         this.props.changeNoteText(text);
@@ -35,32 +53,53 @@ class WordDetail extends Component {
         } = this.props.wordDetail;
 
         const { bold, headerContainer, headerText, 
-            wordDetailContainer, wordDetailCommon, wordDetailCommonText, textAreaStyle 
+            wordDetailContainer, wordDetailCommon, wordDetailCommonText, textAreaStyle,buttonStyle 
         } = styles;
 
+        if (this.state.loading) {
+            return <ActivityIndicator />;
+        }
+
         return (
-            <Card 
-                containerStyle={{ margin: 0, padding: 0, height: HEIGHT - 110, width: WIDTH - 60, justifyContent: 'space-around', borderWidth: 5, borderColor: 'green' }}
-                title={`Group: ${wordGroup}`}
-            >
-                <ListItem                    
-                    title={word}
-                />
-                <ListItem
-                    title={`Meaning: ${meaning}`}
-                />
-                <ListItem
-                    title={`Sentence: ${sentence}`}
-                />
-                <ListItem
-                    title={<TextToSpeech 
+            <Container>
+            <Content>
+              <Card style={{ flex: 1 }}>
+                <CardItem bordered>
+                  <Left>
+                    <ProgressCircle percent={50} />
+                    {/* <Thumbnail source={{uri: 'Image URL'}} /> */}
+                    <Body>
+                      <Text>{ `Group: ${wordGroup}` }</Text>
+                      <Text note>{ `Word: ${word}` }</Text>
+                    </Body>
+                  </Left>
+                </CardItem>
+                <CardItem bordered>
+                  <Body>
+                    <Text bordered>
+                      { `Meaning: ${meaning}` }
+                    </Text>
+                  </Body>
+                </CardItem>
+                <CardItem bordered>
+                  <Body>
+                    <Text>
+                      { `Sentence: ${sentence}` }
+                    </Text>
+                  </Body>
+                </CardItem>
+                <CardItem bordered>
+                  <Body>
+                    <TextToSpeech 
                         IconContainerStyle={{ alignSelf: 'center' }}
                         color='#000'
                         textToSpeak={word}
-                    />}
-                />
-                <ListItem
-                    title={<TextInput
+                    />
+                  </Body>
+                </CardItem>
+                <CardItem bordered>
+                  <Body>
+                    <TextInput
                         style={textAreaStyle}
                         placeholder={'Notes'}
                         placeholderTextColor={'#9E9E9E'}
@@ -70,77 +109,27 @@ class WordDetail extends Component {
                         value={this.props.noteText}
                         underlineColorAndroid="transparent"
                         editable={!this.props.isFromSearchScreen}
-                    />}
-                />
-                <ListItem
-                    title={<Button 
-                        title='Update Note'
-                        raised
-                        buttonStyle={{ backgroundColor: APP_THEME }}
-                        containerStyle={{ marginRight: 15, marginLeft: 15 }}
-                        onPress={this.onButtonPress}
-                    />}
-                />
-                    {/* <View style={wordDetailContainer}>
-                        <View style={[wordDetailCommon, { alignSelf: 'center' }]}>
-                            <Text style={[bold, { fontSize: 24 }]}>
-                                { word }
-                            </Text>
-                        </View>
-                        <View style={wordDetailCommon}>
-                            <Text style={wordDetailCommonText}>
-                                <Text style={bold}>Meaning: </Text>
-                                <Text>{ meaning }</Text>
-                            </Text>
-                        </View>
-                        <View style={wordDetailCommon}>
-                            <Text style={wordDetailCommonText}>
-                                <Text style={bold}>Sentence: </Text>
-                                <Text>{ sentence }</Text>
-                            </Text>
-                        </View>
-                        <View style={wordDetailCommon}>
-                            <TextToSpeech 
-                                IconContainerStyle={{ alignSelf: 'center' }}
-                                color='#000'
-                                textToSpeak={word}
-                            />
-                        </View>
-                        <View style={wordDetailCommon}>
-                            <TextInput
-                                style={textAreaStyle}
-                                placeholder={'Notes'}
-                                placeholderTextColor={'#9E9E9E'}
-                                multiline
-                                numberOfLines={3}
-                                onChangeText={this.onChangeText}
-                                value={this.props.noteText}
-                                underlineColorAndroid="transparent"
-                                editable={!this.props.isFromSearchScreen}
-                            />
-                        </View>
-                        <View 
-                            style={[wordDetailCommon, { display: this.props.isFromSearchScreen ? 'none' : 'flex' }]}
-                        >
-                            <Button 
-                                title='Update Note'
-                                raised
-                                buttonStyle={{ backgroundColor: APP_THEME }}
-                                containerStyle={{ marginRight: 15, marginLeft: 15 }}
-                                onPress={this.onButtonPress}
-                            />
-                        </View>
-                    </View>
-                    <View style={{ flex: 1 }}>
-                        <Divider style={{ backgroundColor: '#000000', height: 1 }} />
-                        <View style={[headerContainer, { paddingTop: 3 }]}>
-                            <DifficultLevel
-                                isFromSearchScreen={this.props.isFromSearchScreen}
-                                wordDetail={this.props.wordDetail}
-                            />
-                        </View>
-                    </View> */}
-            </Card>
+                    />
+
+                    <Button 
+                        rounded 
+                        success 
+                        disabled={this.props.isFromSearchScreen} 
+                        onPress={this.onButtonPress} 
+                        style={buttonStyle}
+                    >
+                        <Text> Update </Text>
+                    </Button>
+                  </Body>
+                </CardItem>
+                <CardItem bordered footer>
+                    <Body>
+                        <DifficultLevel wordDetail={this.props.wordDetail} />
+                    </Body>
+                </CardItem>
+              </Card>
+            </Content>
+          </Container>
         );
     }
 }
@@ -165,6 +154,8 @@ const styles = {
         marginTop: 10,
     },
     textAreaStyle: {
+        flex: 1,
+        width: '100%',
         textAlign: 'center',
         borderWidth: 2,
         borderColor: '#9E9E9E',
@@ -175,6 +166,10 @@ const styles = {
     },
     wordDetailCommonText: {
         fontSize: 16
+    },
+    buttonStyle: {
+        alignSelf: 'center',
+        marginTop: 10
     }
 };
 
