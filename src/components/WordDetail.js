@@ -126,7 +126,6 @@ class WordDetail extends Component {
                 <CardItem bordered footer>
                     <Body>
                         { this.props.isFromSearchScreen ? <Text>{`Level: ${level.charAt(0).toUpperCase()}${level.slice(1)}`}</Text> : <DifficultLevel wordDetail={this.props.wordDetail} /> }
-                      
                     </Body>
                 </CardItem>
               </Card>
