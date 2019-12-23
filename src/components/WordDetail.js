@@ -71,6 +71,7 @@ class WordDetail extends Component {
                     <Body>
                       <Text>{ `Group: ${wordGroup}` }</Text>
                       <Text note>{ `Word: ${word}` }</Text>
+                      <Text note>{ `List No: ${listNo}` }</Text>
                     </Body>
                   </Left>
                 </CardItem>
@@ -124,7 +125,8 @@ class WordDetail extends Component {
                 </CardItem>
                 <CardItem bordered footer>
                     <Body>
-                        <DifficultLevel wordDetail={this.props.wordDetail} />
+                        { this.props.isFromSearchScreen ? <Text>{`Level: ${level.charAt(0).toUpperCase()}${level.slice(1)}`}</Text> : <DifficultLevel wordDetail={this.props.wordDetail} /> }
+                      
                     </Body>
                 </CardItem>
               </Card>

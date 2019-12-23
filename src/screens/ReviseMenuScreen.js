@@ -25,7 +25,13 @@ class ReviseScreen extends Component {
     state = { reviseMenuArray: [] };
     
     componentDidMount() {
-        this.props.getReviseMenuDetail();
+        //this.props.getReviseMenuDetail();
+        this.props.navigation.addListener(
+            'didFocus',
+            () => {
+                this.props.getReviseMenuDetail();
+            }
+        );
     }
 
     componentWillReceiveProps(props) {
