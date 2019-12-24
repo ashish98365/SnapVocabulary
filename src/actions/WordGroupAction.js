@@ -41,7 +41,6 @@ export const refreshWordGroup = (wordList) => (dispatch) => {
             query,
             [wordList], 
             (_, { rows: { _array } }) => {
-                console.log(_array);
                 dispatch({ type: WORD_LIST_SELECTED, payload: _array });
             },
             (t, error) => { console.log(error); }
