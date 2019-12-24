@@ -33,12 +33,12 @@ class WordGroupScreen extends Component {
     state = { wordGroupArray: [], isFetching: false };
 
     componentWillReceiveProps(newProps) {
-        const { wordGroupArray } = newProps;
-        console.log("------ IN componentWillReceiveProps ------------");
-        console.log(wordGroupArray.length);
+        const { wordGroupArray } = newProps;        
         if (wordGroupArray && wordGroupArray.length > 0) {
-            console.log("------ Inside IF ------------");
-            this.setState({ wordGroupArray, isFetching: false });
+            this.setState({ wordGroupArray });
+        }
+        if (this.state.isFetching) {
+            this.setState({ isFetching: false });
         }
     }
 

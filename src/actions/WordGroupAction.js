@@ -35,14 +35,13 @@ export const navigateToWordGroup = (wordList, navigateObj, navigateTo) => (dispa
 };
 
 export const refreshWordGroup = (wordList) => (dispatch) => {
-    console.log(`-------WORD LIST ${wordList}`);
     const dbConn = SQLite.openDatabase(DATABASE_NAME);
     dbConn.transaction(tx => {
         tx.executeSql(
             query,
-            [JSON.stringify(wordList)], 
+            [wordList], 
             (_, { rows: { _array } }) => {
-                console.log("IN QUERY"+_array.length);
+                console.log(_array);
                 dispatch({ type: WORD_LIST_SELECTED, payload: _array });
             },
             (t, error) => { console.log(error); }
