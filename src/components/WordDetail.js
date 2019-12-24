@@ -68,25 +68,27 @@ class WordDetail extends Component {
               <Card style={{ flex: 1 }}>
                 <CardItem bordered>
                   <Left>
-                    { level !== COLUMN_LEVEL_NOT_DEFINE ? <Icon name='check-circle' type='font-awesome' color='#82c91e' size={50} /> : <Icon name='times-circle' type='font-awesome' color='red' size={50} /> }
+                    { level !== COLUMN_LEVEL_NOT_DEFINE ? <Icon name='check-circle' type='font-awesome' color='#4dad4a' size={50} /> : <Icon name='times-circle' type='font-awesome' color='red' size={50} /> }
                     <Body>
-                      <Text>{ `Group: ${wordGroup}` }</Text>
-                      <Text note>{ `Word: ${word}` }</Text>
-                      <Text note>{ `List No: ${listNo}` }</Text>
+                    <Text>{ `Group:- ${wordGroup}` }</Text>
+                      <Text note>{ `Word:- ${word}` }</Text>
+                      <Text note>{ `List No:- ${listNo}` }</Text>
                     </Body>
                   </Left>
                 </CardItem>
                 <CardItem bordered>
                   <Body>
-                    <Text bordered>
-                      { `Meaning: ${meaning}` }
+                    <Text>
+                      <Text style={bold}>Meaning: </Text>
+                      <Text>{meaning}</Text>
                     </Text>
                   </Body>
                 </CardItem>
                 <CardItem bordered>
                   <Body>
                     <Text>
-                      { `Sentence: ${sentence}` }
+                      <Text style={bold}>Sentence: </Text>
+                      <Text>{sentence}</Text>
                     </Text>
                   </Body>
                 </CardItem>

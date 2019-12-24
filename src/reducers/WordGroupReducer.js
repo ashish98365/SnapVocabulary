@@ -1,4 +1,4 @@
-import { WORD_LIST_SELECTED } from '../utils/Type';
+import { WORD_LIST_SELECTED, WORD_GROUP_REFRESH } from '../utils/Type';
 
 const INITIAL_STATE = {
     wordGroupArray: []

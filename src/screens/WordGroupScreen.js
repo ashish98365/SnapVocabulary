@@ -3,7 +3,7 @@ import { View, FlatList, Text } from 'react-native';
 import { connect } from 'react-redux';
 import { ListItem, Left, Right, Icon } from 'native-base';
 
-import { navigateToWord } from '../actions';
+import { refreshWordGroup, navigateToWord } from '../actions';
 import GeneralList from '../components/GeneralList';
 import { 
     DATABASE_NAME,
@@ -30,7 +30,24 @@ class WordGroupScreen extends Component {
         };
     }
 
+    state = { wordGroupArray: [], isFetching: false };
+
+    componentWillReceiveProps(newProps) {
+        const { wordGroupArray } = newProps;
+        console.log("------ IN componentWillReceiveProps ------------");
+        console.log(wordGroupArray.length);
+        if (wordGroupArray && wordGroupArray.length > 0) {
+            console.log("------ Inside IF ------------");
+            this.setState({ wordGroupArray, isFetching: false });
+        }
+    }
+
     keyExtractor = (item, index) => index.toString();
+
+    doRefresh = () => {
+        this.setState({ isFetching: true });
+        this.props.refreshWordGroup(this.props.navigation.getParam('listNo'));
+    }
 
     renderItem = ({ item }) => {
         return (
@@ -51,8 +68,10 @@ class WordGroupScreen extends Component {
             <View style={{ flex: 1 }} >
                 <FlatList 
                     keyExtractor={this.keyExtractor}
-                    data={this.props.wordGroupArray}
+                    data={this.state.wordGroupArray}
                     renderItem={this.renderItem}
+                    onRefresh={this.doRefresh}
+                    refreshing={this.state.isFetching}
                 />
             </View>
         );
@@ -72,4 +91,4 @@ const mapStateToProps = ({ wordGroup: { wordGroupArray }, words: { wordArray } }
     return { wordGroupArray, wordArray };
 };
 
-export default connect(mapStateToProps, { navigateToWord })(WordGroupScreen);
+export default connect(mapStateToProps, { refreshWordGroup, navigateToWord })(WordGroupScreen);

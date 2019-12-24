@@ -1,6 +1,6 @@
 import { SQLite } from 'expo-sqlite';
 
-import { WORD_LIST_SELECTED } from '../utils/Type';
+import { WORD_LIST_SELECTED, WORD_GROUP_REFRESH } from '../utils/Type';
 
 import { 
     DATABASE_NAME,
@@ -13,13 +13,13 @@ import {
     PERCENT_COMPLETED
   } from '../utils/DatabaseType';
 
-export const navigateToWordGroup = (wordList, navigateObj, navigateTo) => (dispatch) => {
-    const query = `select distinct ${COLUMN_GROUP},
-                    COUNT(DISTINCT ${COLUMN_WORD}) || ' Words' AS ${COLUMN_WORD},
-                    (100 * SUM(${COLUMN_LEVEL} <> '${COLUMN_LEVEL_NOT_DEFINE}') / COUNT(${COLUMN_GROUP})) AS ${PERCENT_COMPLETED}
-                    from ${TABLE_NAME}  
-                    where ${COLUMN_LIST_NO}  = ? GROUP BY ${COLUMN_GROUP}`;
+const query = `select distinct ${COLUMN_GROUP},
+  COUNT(DISTINCT ${COLUMN_WORD}) || ' Words' AS ${COLUMN_WORD},
+  (100 * SUM(${COLUMN_LEVEL} <> '${COLUMN_LEVEL_NOT_DEFINE}') / COUNT(${COLUMN_GROUP})) AS ${PERCENT_COMPLETED}
+  from ${TABLE_NAME}  
+  where ${COLUMN_LIST_NO}  = ? GROUP BY ${COLUMN_GROUP}`;
 
+export const navigateToWordGroup = (wordList, navigateObj, navigateTo) => (dispatch) => {
     const dbConn = SQLite.openDatabase(DATABASE_NAME);
     dbConn.transaction(tx => {
         tx.executeSql(
@@ -32,4 +32,20 @@ export const navigateToWordGroup = (wordList, navigateObj, navigateTo) => (dispa
         );
     });
     navigateObj(navigateTo, { listNo: JSON.stringify(wordList) });
+};
+
+export const refreshWordGroup = (wordList) => (dispatch) => {
+    console.log(`-------WORD LIST ${wordList}`);
+    const dbConn = SQLite.openDatabase(DATABASE_NAME);
+    dbConn.transaction(tx => {
+        tx.executeSql(
+            query,
+            [JSON.stringify(wordList)], 
+            (_, { rows: { _array } }) => {
+                console.log("IN QUERY"+_array.length);
+                dispatch({ type: WORD_LIST_SELECTED, payload: _array });
+            },
+            (t, error) => { console.log(error); }
+        );
+    });
 };

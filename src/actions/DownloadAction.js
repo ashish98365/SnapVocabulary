@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { AsyncStorage } from 'react-native';
 import { SQLite } from 'expo-sqlite';
+import * as wordDetail from '../utils/Data.json';
 
 import { 
         DATA_DOWNLOADED_SUCCESSFULLY, 
@@ -20,10 +21,13 @@ import {
     COLUMN_SENTENCE
   } from '../utils/DatabaseType';
 
-export const downloadWordsFromApi = () => async dispatch => {
+export const downloadWordsFromApi = () => dispatch => {
     try {
-        const wordArrayData = await axios.get(ALL_WORD_INFO_URL);
-        const wordArray = wordArrayData.data;
+        // --------Download from api is disable by default----------------
+        // const wordArrayData = await axios.get(ALL_WORD_INFO_URL);
+        // const wordArray = wordArrayData.data;
+        
+        const wordArray = wordDetail.data;
         insertWordDetailInTable(wordArray, dispatch);
     } catch (error) {
         console.log(error);
