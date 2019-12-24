@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Dimensions, TextInput, ActivityIndicator } from 'react-native';
+import { Icon } from 'react-native-elements';
 import { Container, Content, Card, CardItem, Text, Button, Left, Body } from 'native-base';
 import { connect } from 'react-redux';
 import { Font } from 'expo'; //import is require else font error is given
@@ -9,6 +10,7 @@ import DifficultLevel from '../components/DifficultLevel';
 import { changeNoteText, updateNote } from '../actions';
 import { APP_THEME } from '../utils/Type';
 import ProgressCircle from './PercentCircle';
+import { COLUMN_LEVEL_NOT_DEFINE } from '../utils/DatabaseType';
 
 const HEIGHT = Dimensions.get('window').height;
 const WIDTH = Dimensions.get('window').width;
@@ -66,8 +68,7 @@ class WordDetail extends Component {
               <Card style={{ flex: 1 }}>
                 <CardItem bordered>
                   <Left>
-                    <ProgressCircle percent={50} />
-                    {/* <Thumbnail source={{uri: 'Image URL'}} /> */}
+                    { level !== COLUMN_LEVEL_NOT_DEFINE ? <Icon name='check-circle' type='font-awesome' color='#82c91e' size={50} /> : <Icon name='times-circle' type='font-awesome' color='red' size={50} /> }
                     <Body>
                       <Text>{ `Group: ${wordGroup}` }</Text>
                       <Text note>{ `Word: ${word}` }</Text>
